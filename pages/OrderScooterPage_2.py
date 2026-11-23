@@ -1,9 +1,9 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
+from pages.BasePage import BasePage
 
 
-class OrderScooterPage_2:
+class OrderScooterPage_2(BasePage):
     date_field = (By.XPATH, ".//input[@placeholder='* Когда привезти самокат']") #поле Когда привезти
     calendar_form = (By.CLASS_NAME, "react-datepicker") #форма календаря
     calendar_day = (By.XPATH, ".//div[contains(@class, 'react-datepicker__day--028') and not(contains(@class, 'react-datepicker__day--disabled'))]") #точный день в календаре
@@ -16,14 +16,10 @@ class OrderScooterPage_2:
     yes_button = (By.XPATH, ".//button[text()='Да']") #кнопка Да
     success_message = (By.XPATH, "//div[contains(text(), 'Заказ оформлен')]") #сообщение об успешном оформлении заказа
 
-    def __init__(self, driver):
-        self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
-
     def set_date(self):
-        self.driver.find_element(*self.date_field).click()
+        self.click(self.date_field)
         self.wait.until(expected_conditions.element_to_be_clickable(self.calendar_day))
-        self.driver.find_element(*self.calendar_day).click()
+        self.click(self.calendar_day)
 
     def set_order_time(self):
         element = self.driver.find_element(*self.order_time)
@@ -33,16 +29,16 @@ class OrderScooterPage_2:
         self.driver.find_element(*self.order_time_for_test).click()
 
     def set_color(self):
-        self.driver.find_element(*self.color_black).click()
+        self.click(self.color_black)
     
     def set_comment(self, text):
-        self.driver.find_element(*self.comments).send_keys(text)
+        self.send_keys(self.comments, text)
 
     def click_order_button(self):
-        self.driver.find_element(*self.order_button).click()
+        self.click(self.order_button)
 
     def click_yes_button(self):
-        self.driver.find_element(*self.yes_button).click()
+        self.click(self.yes_button)
 
     def order_finish(self, comment=''):
         self.set_date()

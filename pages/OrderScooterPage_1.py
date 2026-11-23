@@ -1,8 +1,8 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
+from pages.BasePage import BasePage
 
-class OrderScooterPage_1:
+class OrderScooterPage_1(BasePage):
     name_field = (By.XPATH, ".//input[@placeholder='* Имя']") #поле Имя
     surname_field = (By.XPATH, ".//input[@placeholder='* Фамилия']") #поле Фамилия
     address_field = (By.XPATH, ".//input[@placeholder='* Адрес: куда привезти заказ']") #поле Адрес
@@ -14,18 +14,14 @@ class OrderScooterPage_1:
     scooter_button = (By.XPATH, '//a[img[@alt="Scooter"]]') #кнопка Самокат
     yandex_button = (By.XPATH, '//a[img[@alt="Yandex"]]') #кнопка Яндекс
 
-    def __init__(self, driver):
-        self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
-
     def set_name(self, name):
-        self.driver.find_element(*self.name_field).send_keys(name)
+        self.send_keys(self.name_field, name)
 
     def set_surname(self, surname):
-        self.driver.find_element(*self.surname_field).send_keys(surname)
+        self.send_keys(self.surname_field, surname)
 
     def set_address(self, address):
-        self.driver.find_element(*self.address_field).send_keys(address)
+        self.send_keys(self.address_field, address)
 
     def set_metro(self, metro):
         field = self.wait.until(expected_conditions.element_to_be_clickable(self.metro_field))
@@ -35,17 +31,16 @@ class OrderScooterPage_1:
         option.click()
 
     def set_phone(self, phone):
-        field = self.wait.until(expected_conditions.element_to_be_clickable(self.phone_field))
-        field.send_keys(phone)
+        self.send_keys(self.phone_field, phone)
 
     def click_next_button(self):
-        self.driver.find_element(*self.next_button).click()
+        self.click(self.next_button)
 
     def click_scooter_button(self):
-        self.driver.find_element(*self.scooter_button).click()
+        self.click(self.scooter_button)
 
     def click_yandex_button(self):
-        self.driver.find_element(*self.yandex_button).click()
+        self.click(self.yandex_button)
 
 
     def order_start(self, name, surname, address, metro, phone):

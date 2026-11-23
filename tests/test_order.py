@@ -5,7 +5,6 @@ from pages.MainPageScooter import MainPageScooter
 from pages.OrderScooterPage_1 import OrderScooterPage_1
 from pages.OrderScooterPage_2 import OrderScooterPage_2
 
-
 class TestOrder:
     def test_order_up_button(self, driver):
         main_page = MainPageScooter(driver)

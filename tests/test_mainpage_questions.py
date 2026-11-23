@@ -17,10 +17,8 @@ class TestMainPageQuestions:
     @pytest.mark.parametrize('button, answer, expected_text', elements)
     def test_mainpage_questions_and_answers(self, driver, button, answer, expected_text):
         page = MainPageScooter(driver)
-        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable(MainPageScooter.cookie_button))
         page.click_cookie_button()
-        page.scroll_to_questions()
-        WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable(MainPageScooter.question_8button))
-        driver.find_element(*button).click()
-        text = WebDriverWait(driver, 5).until(expected_conditions.visibility_of_element_located(answer)).text
-        assert expected_text in text
+        page.scroll_to(button)
+        page.click_question_button(button)
+        answer_text = page.get_text(answer)
+        assert expected_text in answer_text
