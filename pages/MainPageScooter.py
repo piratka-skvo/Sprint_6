@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
 from pages.BasePage import BasePage
+import allure
 
 class MainPageScooter(BasePage):
     question_title = (By.CLASS_NAME, "Home_SubHeader__zwi_E") #раздел "Вопросы о важном"
@@ -25,20 +25,23 @@ class MainPageScooter(BasePage):
     scooter_img = (By.XPATH, '//img[@alt="Scooter blueprint"]')
     cookie_button = (By.ID, "rcc-confirm-button")
 
+    @allure.step('Клик по кнопке вопроса {button}')
     def click_question_button(self, button):
-        element = self.wait.until(expected_conditions.presence_of_element_located(button))
-        self.driver.execute_script("arguments[0].click();", element)
+        self.click_by_script(button)
 
+    @allure.step('Проверка текста ответа: {expected_text}')
     def check_answer(self, locator, expected_text):
         answer = self.get_text(locator)
         assert expected_text in answer
-    
+
+    @allure.step('Клик по кнопке Заказать в верхней части страницы')
     def click_order_up(self):
         self.click(self.order_button_up)
 
+    @allure.step('Клик по кнопке Заказать в нижней части страницы')
     def click_order_down(self):
         self.click(self.order_button_down)
 
+    @allure.step('Клик по кнопке принятия куки')
     def click_cookie_button(self):
-        self.wait.until(expected_conditions.element_to_be_clickable(self.cookie_button))
         self.click(self.cookie_button)

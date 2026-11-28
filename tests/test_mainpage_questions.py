@@ -1,7 +1,6 @@
 import pytest
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
 from pages.MainPageScooter import MainPageScooter
+import allure
 
 elements=[
 (MainPageScooter.question_1button, MainPageScooter.question_1answer, 'наличными или картой'),
@@ -14,6 +13,7 @@ elements=[
 (MainPageScooter.question_8button, MainPageScooter.question_8answer, 'Всем самокатов')]
 
 class TestMainPageQuestions:
+    @allure.title('Проверка ответа на вопрос: {expected_text}')
     @pytest.mark.parametrize('button, answer, expected_text', elements)
     def test_mainpage_questions_and_answers(self, driver, button, answer, expected_text):
         page = MainPageScooter(driver)
